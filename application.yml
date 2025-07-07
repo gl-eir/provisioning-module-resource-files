@@ -1,0 +1,59 @@
+server:
+  port: 9081
+  http:
+    port: 9082
+  servlet:
+    context-path: /eir
+  ssl:
+    #enabled: true
+    #key-alias: ssl_eirl1
+    #key-store: file:./eirl1_eirs_gov_kh.p12
+    #key-store-type: PKCS12
+    #key-store-password: 3!rL1@2025
+
+    enabled: true
+    key-alias: dmc_eir_ssl
+    key-store: classpath:dmc_eir.p12
+    key-store-type: PKCS12
+    key-password: eir@12345
+    key-store-password: eir@12345
+
+
+spring:
+  datasource:
+    #url: jdbc:mysql://127.0.0.1:3306/app
+    #username: eirapp1
+    #password: 31Rlab^pp1
+    #    url: jdbc:mysql://159.223.159.153:3306/ceir
+    #    username: cdrp
+    #    password: Cdrp@1234
+    driverClassName: com.mysql.cj.jdbc.Driver
+  jpa:
+    show-sql: false
+    #properties:
+    hibernate:
+      ddl-auto: none
+      dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+
+jasypt:
+  encryptor:
+    password: eir
+    algorithm: PBEWithMD5AndDES
+    iv-generator-classname: org.jasypt.iv.NoIvGenerator
+        
+scheduler:
+  daily:
+    cronjob: 0 0 1 * * *
+
+deviceSyncRequest:
+  delete:
+    beforeDays: 5
+    filePath: /u02/eirdata/pm/files
+
+alerts:
+  postUrl: http://127.0.0.1:9504/eir/alert
+  processId: Provisioning Module
+  alerts-mapping:
+    CORE_MODULE_URL_CALL_EXCEPTION:
+      alertId: ALERT1201
+      message: "Not able to call CORE Module, <URL> : <EXCEPTION>."
